@@ -1,0 +1,14 @@
+from typing import Any
+
+from sqlalchemy.orm import as_declarative, declared_attr
+
+
+@as_declarative()
+class BaseModel:
+    id: Any
+    __name__: str
+
+    @declared_attr
+    def __tablename__(cls) -> str:
+        """Generates table name from class name"""
+        return cls.__name__.lower()
