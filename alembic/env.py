@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from Core.config import settings
-from DB.Models.base_model import BaseModel
+from DB.Models.base_model import TableBaseModel
 
 # config
 
@@ -27,7 +27,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = BaseModel.metadata
+target_metadata = TableBaseModel.metadata
 
 
 # other values from the config, defined by the needs of env.py,

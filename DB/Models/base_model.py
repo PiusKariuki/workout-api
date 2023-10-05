@@ -4,7 +4,7 @@ from sqlalchemy.orm import as_declarative, declared_attr
 
 
 @as_declarative()
-class BaseModel:
+class TableBaseModel:
     id: Any
     __name__: str
 
