@@ -1,13 +1,21 @@
 from datetime import date
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class CreateWorkout(BaseModel):
-    category_id: int = Field(...)
-    date: date = Field(...)
-    exercise_id: int = Field(...)
-    sets: int = Field(...)
-    reps: int = Field(...)
-    seconds_of_rest: int = Field(...)
+    category_id: int
+    date: date
+    exercise_id: int
+    sets: int
+    reps: int
+    seconds_of_rest: int | None = None
 
 
+class ReturnWorkout(BaseModel):
+    id: int
+    category_id: int
+    date: date
+    exercise_id: int
+    sets: int
+    reps: int
+    seconds_of_rest: int | None = None

@@ -9,5 +9,5 @@ def create_workout_controller(workout, db: Session):
     )
     db.add(workout)
     db.commit()
-    db.refresh()
+    # db.refresh(ses)
     return workout
