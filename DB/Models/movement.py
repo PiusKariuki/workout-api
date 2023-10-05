@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
 
-from DB.Models.base_model import TableBaseModel
+from DB.Models.base import TableBaseModel
 
 
 class Movement(TableBaseModel):

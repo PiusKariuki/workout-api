@@ -1,5 +1,5 @@
 from sqlalchemy import Integer, Column, ForeignKey, Date
-from DB.Models.base_model import TableBaseModel
+from DB.Models.base import TableBaseModel
 
 
 class Workout(TableBaseModel):

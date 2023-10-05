@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from DB.Models.category_model import Category
+from DB.Models.category import Category
 from Schemas.category import CreateCategory
 
 
@@ -13,3 +13,8 @@ def create_category_controller(category: CreateCategory, db: Session):
     db.add(category)
     db.commit()
     return category
+
+
+def get_all_categories(db:Session):
+    categories = db.query(Category).all()
+    return categories

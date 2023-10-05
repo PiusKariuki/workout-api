@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from Api.V1.Routes.category_routes import category_router
-from Api.V1.Routes.movement_routes import movement_router
-from Api.V1.Routes.workout_routes import workout_router
+from Api.V1.Routes.category import category_router
+from Api.V1.Routes.movement import movement_router
+from Api.V1.Routes.workout import workout_router
 
 index_router = APIRouter()
 

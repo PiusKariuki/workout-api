@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from DB.Models.workout_model import Workout
+from DB.Models.workout import Workout
 
 
 def create_workout_controller(workout, db: Session):

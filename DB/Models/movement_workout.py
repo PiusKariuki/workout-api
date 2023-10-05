@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, ForeignKey
 
-from DB.Models.base_model import TableBaseModel
+from DB.Models.base import TableBaseModel
 
 
-class ExerciseMovement(TableBaseModel):
+class MovementWorkout(TableBaseModel):
     id = Column(Integer, primary_key=True)
     movement_id = Column(Integer, ForeignKey("movement"), nullable=False)
     workout_id = Column(Integer, ForeignKey("workout"), nullable=False)

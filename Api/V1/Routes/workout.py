@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import session
 from starlette import status
-from Api.V1.Controllers.workout_controller import create_workout_controller
+from Api.V1.Controllers.workout import create_workout_controller
 from DB.session import get_db
 from Schemas.workout import CreateWorkout, ReturnWorkout
 

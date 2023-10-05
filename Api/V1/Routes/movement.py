@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette import status
 
-from Api.V1.Controllers.movement_controller import create_movement_controller
+from Api.V1.Controllers.movement import create_movement_controller
 from DB.session import get_db
 from Schemas.movement import CreateMovement, ReturnMovement
 
