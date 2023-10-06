@@ -10,3 +10,7 @@ def create_movement_controller(movement: CreateMovement, db: Session):
     db.commit()
 
     return new_movement
+
+
+def get_all_movements(db:Session):
+    return db.query(Movement).all()
