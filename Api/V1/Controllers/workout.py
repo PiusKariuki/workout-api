@@ -1,4 +1,6 @@
+import sqlalchemy
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import cast
 from DB.Models.category import Category
 from DB.Models.movement_workout import MovementWorkoutJunction
 from DB.Models.workout import Workout
@@ -35,7 +37,7 @@ def get_all_workouts(db: Session):
         Workout.id,
         Workout.date,
         Category.title
-    ).join(Category, Workout.category_id == Category.id).all()
+    ).join(Category, cast(Workout.category_id, sqlalchemy.Integer) == Category.id).all()
 
     workouts = [{
         "id":row.id,
@@ -44,3 +46,4 @@ def get_all_workouts(db: Session):
     } for row in workouts]
 
     return workouts
+
