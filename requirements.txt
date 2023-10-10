@@ -1,8 +1,9 @@
 uvicorn[standard]
 fastapi~=0.103.1
-pydantic~=2.4.1
-SQLAlchemy~=2.0.21
+pydantic~=1.10.13
+SQLAlchemy~=1.4.41
 alembic~=1.12.0
 python-dotenv~=1.0.0
 psycopg2-binary
 starlette~=0.27.0
+sqlmodel~=0.0.8

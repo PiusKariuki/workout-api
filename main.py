@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from Api.V1.Routes.index import index_router
+from sqlmodel import SQLModel
+from Api.V1.Routes import index_router
 from Core.config import settings
-from DB.Models.base import TableBaseModel
-from DB.session import engine
+from Models import engine
 
 
 def include_router(application: FastAPI):
@@ -10,7 +10,7 @@ def include_router(application: FastAPI):
 
 
 def create_tables():
-    TableBaseModel.metadata.create_all(bind=engine)
+    SQLModel.metadata.create_all(engine)
 
 
 def start_application() -> FastAPI:

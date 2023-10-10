@@ -1,14 +1,14 @@
 from datetime import date
 from typing import List
-
 from pydantic import BaseModel
 
 
 class Movement(BaseModel):
     movement_id: int
+    position: int
     sets: int
     reps: int
-    seconds_of_rest: int | None = None
+    rest_in_seconds: int | None = None
 
 
 class CreateWorkout(BaseModel):
@@ -18,7 +18,4 @@ class CreateWorkout(BaseModel):
 
 
 class ReturnWorkout(BaseModel):
-    id: int
-    category_id: int
-    date: date
-    movements: list[Movement]
+    success: bool

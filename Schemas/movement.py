@@ -6,7 +6,5 @@ class CreateMovement(BaseModel):
     video: str
 
 
-class ReturnMovement(BaseModel):
+class ReturnMovement(CreateMovement):
     id: int
-    name: str
-    video: str

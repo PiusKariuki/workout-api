@@ -5,6 +5,5 @@ class CreateCategory(BaseModel):
     title: str
 
 
-class ReturnCategory(BaseModel):
+class ReturnCategory(CreateCategory):
     id: int
-    title: str
