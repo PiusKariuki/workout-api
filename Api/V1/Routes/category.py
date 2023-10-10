@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import session
 from starlette import status
 from Api.V1.Controllers.category import create_category_controller, get_all_categories
-from Models import get_db
+from Database import get_db
 from Schemas.category import CreateCategory, ReturnCategory
 
 category_router = APIRouter()

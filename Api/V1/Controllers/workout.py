@@ -1,13 +1,14 @@
 from datetime import datetime, date
 from fastapi import HTTPException
 from sqlmodel import Session, Integer, cast, select, col
-from Models import Category
-from Models import MovementWorkoutJunction
-from Models import Workout
+from Database import Category
+from Database import MovementWorkoutJunction
+from Database import Workout
 from Schemas import CreateWorkout
 
 
 def create_workout_controller(workout: CreateWorkout, session: Session):
+    """Creates a workout with a date and category and includes movements in the junction table"""
     try:
         # convert date string to datetime object
         date_format = '%Y-%m-%d'
@@ -41,6 +42,7 @@ def create_workout_controller(workout: CreateWorkout, session: Session):
 
 
 def get_todays_workout(session: Session):
+    """Get the workout of the day """
     try:
         # get the year month and date in string format
         date_today = date.today().strftime('%Y-%m-%d')

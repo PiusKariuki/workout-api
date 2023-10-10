@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlmodel import Session
 from starlette import status
 from Api.V1.Controllers.workout import create_workout_controller, get_all_workouts, get_todays_workout
-from Models import get_db
+from Database import get_db
 from Schemas.workout import CreateWorkout, ReturnWorkout
 
 workout_router = APIRouter()

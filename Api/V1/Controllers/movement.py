@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from sqlmodel import Session, select, col
-from Models.movement import Movement
+from Database import Movement
 from Schemas.movement import CreateMovement
 
 

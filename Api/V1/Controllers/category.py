@@ -1,5 +1,5 @@
 from sqlmodel import Session, select
-from Models import Category
+from Database import Category
 from Schemas import CreateCategory
 
 

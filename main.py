@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from sqlmodel import SQLModel
 from Api.V1.Routes import index_router
 from Core.config import settings
-from Models import engine
+from Database import engine
 
 
 def include_router(application: FastAPI):
