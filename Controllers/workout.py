@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime, time
 from fastapi import HTTPException
 from sqlmodel import select
 from Database import MovementWorkoutJunction
@@ -8,7 +8,10 @@ from Database import Workout
 def create_workout_controller(workout, session):
     """Creates a workout with a date and category and includes movements in the junction table"""
     try:
-        new_workout = Workout(category_id=workout.category_id, date=workout.date)
+        # set the time to midnight
+        new_date = datetime.combine(workout.date, time.min)
+
+        new_workout = Workout(category_id=workout.category_id, date=new_date)
 
         session.add(new_workout)
         session.commit()
@@ -32,7 +35,6 @@ def create_workout_controller(workout, session):
         return new_workout
 
     except Exception as e:
-        print(f'\n {e}')
         raise HTTPException(status_code=422)
 
 
