@@ -1,20 +1,14 @@
-from datetime import datetime, date
+from datetime import date
 from fastapi import HTTPException
-from sqlmodel import Session, Integer, cast, select, col
-from Database import Category
+from sqlmodel import select
 from Database import MovementWorkoutJunction
 from Database import Workout
-from Schemas import CreateWorkout
 
 
-def create_workout_controller(workout: CreateWorkout, session: Session):
+def create_workout_controller(workout, session):
     """Creates a workout with a date and category and includes movements in the junction table"""
     try:
-        # convert date string to datetime object
-        date_format = '%Y-%m-%d'
-        datetime_object = datetime.strptime(str(workout.date), date_format)
-
-        new_workout = Workout(category_id=workout.category_id, date=datetime_object)
+        new_workout = Workout(category_id=workout.category_id, date=workout.date)
 
         session.add(new_workout)
         session.commit()
@@ -35,13 +29,14 @@ def create_workout_controller(workout: CreateWorkout, session: Session):
         session.add_all(movement_mappings)
         session.commit()
 
-        return {"success": True}
+        return new_workout
 
-    except Exception:
+    except Exception as e:
+        print(f'\n {e}')
         raise HTTPException(status_code=422)
 
 
-def get_todays_workout(session: Session):
+def get_todays_workout(session):
     """Get the workout of the day """
     try:
         # get the year month and date in string format
@@ -53,17 +48,8 @@ def get_todays_workout(session: Session):
         raise HTTPException(status_code=404)
 
 
-def get_all_workouts(session: Session):
-    workouts = session.query(
-        Workout.id,
-        Workout.date,
-        Category.title
-    ).join(Category, cast(Workout.category_id, Integer) == Category.id).all()
-
-    workouts = [{
-        "id": row.id,
-        "date": row.date,
-        "category_title": row.title,
-    } for row in workouts]
-
-    return workouts
+def get_all_workouts(session):
+    try:
+        return session.exec(select(Workout)).all()
+    except Exception:
+        raise HTTPException(status_code=404)

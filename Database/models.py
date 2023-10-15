@@ -11,8 +11,20 @@ class Category(SQLModel, table=True):
 
     id: Optional[int] = Field(primary_key=True, default=None)
     title: str = Field(index=True)
-
+    # relationships attributes
     workouts: List["Workout"] = Relationship(back_populates="category")
+
+
+class MovementWorkoutJunction(SQLModel, table=True):
+    position: int
+    movement_id: Optional[int] = Field(foreign_key="movement.id", default=None, index=True, primary_key=True)
+    workout_id: Optional[int] = Field(foreign_key="workout.id", default=None, index=True, primary_key=True)
+    sets: int
+    reps: int
+    rest_in_seconds: int
+    # relationship attributes
+    movement: "Movement" = Relationship(back_populates="workout_links")
+    workout: "Workout" = Relationship(back_populates="movement_links")
 
 
 class Movement(SQLModel, table=True):
@@ -23,16 +35,8 @@ class Movement(SQLModel, table=True):
     id: Optional[int] = Field(primary_key=True, default=None)
     name: str = Field(index=True)
     video: Optional[str] = None
-
-
-class MovementWorkoutJunction(SQLModel, table=True):
-    id: Optional[int] = Field(primary_key=True, default=None)
-    position: int
-    movement_id: Optional[int] = Field(foreign_key="movement.id", default=None, index=True)
-    workout_id: Optional[int] = Field(foreign_key="workout.id", default=None, index=True)
-    sets: int
-    reps: int
-    rest_in_seconds: int
+    # relationship attributes
+    workout_links: List["MovementWorkoutJunction"] = Relationship(back_populates="movement")
 
 
 class Workout(SQLModel, table=True):
@@ -43,5 +47,7 @@ class Workout(SQLModel, table=True):
     id: Optional[int] = Field(primary_key=True, default=None)
     category_id: Optional[int] = Field(foreign_key="category.id", default=None)
     date: datetime = Field(index=True)
-
+    # relationship attributes
     category: Category = Relationship(back_populates="workouts")
+    movement_links: List["MovementWorkoutJunction"] = Relationship(back_populates="workout")
+

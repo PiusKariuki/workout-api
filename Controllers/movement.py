@@ -1,10 +1,9 @@
 from fastapi import HTTPException
-from sqlmodel import Session, select, col
+from sqlmodel import select, col
 from Database import Movement
-from Schemas.movement import CreateMovement
 
 
-def create_movement_controller(movement: CreateMovement, session: Session):
+def create_movement_controller(movement, session):
     try:
         new_movement = Movement(name=movement.name, video=movement.video)
         session.add(new_movement)
@@ -15,7 +14,7 @@ def create_movement_controller(movement: CreateMovement, session: Session):
         raise HTTPException(status_code=422)
 
 
-def get_all_movements(session: Session):
+def get_all_movements(session):
     try:
         movements = session.exec(select(Movement)).all()
         return movements
@@ -23,6 +22,6 @@ def get_all_movements(session: Session):
         raise HTTPException(status_code=404)
 
 
-async def get_movement_by_name(name: str, session: Session):
+async def get_movement_by_name(name, session):
     movements = session.exec(select(Movement).where(col(Movement.name).ilike(f"%{name}%"))).all()
     return movements

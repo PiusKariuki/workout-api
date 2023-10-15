@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from sqlmodel import SQLModel
-from Api.V1.Routes import index_router
+from Routes import index_router
 from Core.config import settings
 from Database import engine
 

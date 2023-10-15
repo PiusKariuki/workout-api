@@ -1,9 +1,8 @@
-from sqlmodel import Session, select
+from sqlmodel import select
 from Database import Category
-from Schemas import CreateCategory
 
 
-def create_category_controller(category: CreateCategory, session: Session):
+def create_category_controller(category, session):
     category = Category(title=category.title)
     session.add(category)
     session.commit()
@@ -11,6 +10,6 @@ def create_category_controller(category: CreateCategory, session: Session):
     return category
 
 
-def get_all_categories(session: Session):
+def get_all_categories(session):
     categories = session.exec(select(Category)).all()
     return categories
