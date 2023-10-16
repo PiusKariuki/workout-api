@@ -3,6 +3,7 @@ from sqlmodel import SQLModel
 from Routes import index_router
 from Core.config import settings
 from Database import engine
+from fastapi.middleware.cors import CORSMiddleware
 
 
 def include_router(application: FastAPI):
@@ -21,6 +22,14 @@ def start_application() -> FastAPI:
 
 
 app = start_application()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
 
 
 @app.get("/")
