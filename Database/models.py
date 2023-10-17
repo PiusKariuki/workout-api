@@ -11,6 +11,7 @@ class Category(SQLModel, table=True):
 
     id: Optional[int] = Field(primary_key=True, default=None)
     title: str = Field(index=True)
+    banner: str
     # relationships attributes
     workouts: List["Workout"] = Relationship(back_populates="category")
 

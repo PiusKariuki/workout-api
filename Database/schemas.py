@@ -6,6 +6,7 @@ from sqlmodel import SQLModel
 
 class CategoryCreate(SQLModel):
     title: str
+    banner: str
 
 
 class CategoryRead(CategoryCreate):

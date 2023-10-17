@@ -35,7 +35,11 @@ def create_workout_controller(workout, session):
         return new_workout
 
     except Exception as e:
-        raise HTTPException(status_code=422)
+        # for conflict cases where a workout already exists
+        if e.code == 'gkpj':
+            raise HTTPException(status_code=409, detail='Integrity error')
+        else:
+            raise HTTPException(status_code=422)
 
 
 def get_todays_workout(session):

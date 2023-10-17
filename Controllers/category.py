@@ -3,7 +3,7 @@ from Database import Category
 
 
 def create_category_controller(category, session):
-    category = Category(title=category.title)
+    category = Category(title=category.title, banner=category.banner)
     session.add(category)
     session.commit()
     session.refresh(category)
