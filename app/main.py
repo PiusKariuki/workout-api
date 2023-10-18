@@ -16,7 +16,7 @@ def create_tables():
 
 def start_application() -> FastAPI:
     application = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
-    origins = ["*"]
+    origins = ["http://localhost:5173"]
     application.add_middleware(
         CORSMiddleware,
         allow_origins=origins,
