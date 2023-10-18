@@ -16,23 +16,20 @@ def create_tables():
 
 def start_application() -> FastAPI:
     application = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
+    origins = ["*"]
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     create_tables()
     include_router(application)
     return application
 
 
 app = start_application()
-
-
-origins = ["*"]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 
 @app.get("/")
