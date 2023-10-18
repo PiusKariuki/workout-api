@@ -1,8 +1,8 @@
 from datetime import date, datetime, time
 from fastapi import HTTPException
 from sqlmodel import select
-from app.Database import MovementWorkoutJunction
-from app.Database import Workout
+from ..Database import MovementWorkoutJunction
+from ..Database import Workout
 
 
 def create_workout_controller(workout, session):

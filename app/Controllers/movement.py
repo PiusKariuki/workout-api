@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from sqlmodel import select, col
-from app.Database import Movement
+from ..Database import Movement
 
 
 def create_movement_controller(movement, session):

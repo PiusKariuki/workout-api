@@ -1,5 +1,5 @@
 from sqlmodel import select
-from app.Database import Category
+from ..Database import Category
 
 
 def create_category_controller(category, session):

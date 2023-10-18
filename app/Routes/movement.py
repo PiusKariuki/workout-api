@@ -2,8 +2,8 @@ from typing import List
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette import status
-from app.Controllers import create_movement_controller, get_all_movements, get_movement_by_name
-from app.Database import get_db, MovementRead, MovementCreate
+from ..Controllers import create_movement_controller, get_all_movements, get_movement_by_name
+from ..Database import get_db, MovementRead, MovementCreate
 
 movement_router = APIRouter()
 
