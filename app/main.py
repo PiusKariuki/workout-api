@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from sqlmodel import SQLModel
-from Routes import index_router
-from Core.config import settings
-from Database import engine
+from .Routes import index_router
+from .Core.config import settings
+from .Database import engine
 from fastapi.middleware.cors import CORSMiddleware
 
 

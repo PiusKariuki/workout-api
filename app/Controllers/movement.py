@@ -22,6 +22,8 @@ def get_all_movements(session):
         raise HTTPException(status_code=404)
 
 
+
+
 async def get_movement_by_name(name, session):
     movements = session.exec(select(Movement).where(col(Movement.name).ilike(f"%{name}%"))).all()
     return movements
