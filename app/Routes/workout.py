@@ -3,9 +3,9 @@ from typing import List
 from fastapi import APIRouter, Depends
 from sqlmodel import Session
 from starlette import status
-from Controllers import create_workout_controller, get_all_workouts, get_todays_workout, get_workout_by_id
-from Database import get_db
-from Database import WorkoutRead, WorkoutCreate
+from app.Controllers import create_workout_controller, get_all_workouts, get_todays_workout, get_workout_by_id
+from app.Database import get_db
+from app.Database import WorkoutRead, WorkoutCreate
 
 workout_router = APIRouter()
 

@@ -2,7 +2,7 @@ from typing import Generator
 
 from sqlmodel import create_engine, Session
 
-from Core.config import settings
+from app.Core.config import settings
 
 
 engine = create_engine(settings.DATABASE_URI, echo=True)
