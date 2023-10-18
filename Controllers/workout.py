@@ -61,3 +61,10 @@ def get_all_workouts(session, limit, offset):
                 .all())
     except Exception:
         raise HTTPException(status_code=404)
+
+
+def get_workout_by_id(session, workout_id):
+    try:
+        return session.get(Workout, workout_id)
+    except Exception:
+        raise HTTPException(status_code=404)
