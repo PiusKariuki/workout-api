@@ -5,7 +5,7 @@ from sqlmodel import Session
 from starlette import status
 from Controllers import create_workout_controller, get_all_workouts, get_todays_workout
 from Database import get_db
-from Database import WorkoutRead,WorkoutCreate
+from Database import WorkoutRead, WorkoutCreate
 
 workout_router = APIRouter()
 
@@ -16,8 +16,8 @@ async def create_workout(workout: WorkoutCreate, db_session: Session = Depends(g
 
 
 @workout_router.get("/", status_code=status.HTTP_200_OK)
-async def all_workouts(db_session: Session = Depends(get_db)) -> List[WorkoutRead]:
-    return get_all_workouts(session=db_session)
+async def all_workouts(limit: int, offset: int, db_session: Session = Depends(get_db)) -> List[WorkoutRead]:
+    return get_all_workouts(session=db_session, limit=limit, offset=offset)
 
 
 @workout_router.get("/today", status_code=status.HTTP_200_OK)

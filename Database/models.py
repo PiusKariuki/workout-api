@@ -20,6 +20,7 @@ class MovementWorkoutJunction(SQLModel, table=True):
     position: int
     movement_id: Optional[int] = Field(foreign_key="movement.id", default=None, index=True, primary_key=True)
     workout_id: Optional[int] = Field(foreign_key="workout.id", default=None, index=True, primary_key=True)
+    complete: Optional[bool] = False
     sets: int
     reps: int
     rest_in_seconds: int

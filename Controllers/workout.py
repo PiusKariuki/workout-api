@@ -54,8 +54,8 @@ def get_todays_workout(session):
         raise HTTPException(status_code=404)
 
 
-def get_all_workouts(session):
+def get_all_workouts(session, limit, offset):
     try:
-        return session.exec(select(Workout)).all()
+        return session.exec(select(Workout).limit(limit).offset(offset)).all()
     except Exception:
         raise HTTPException(status_code=404)
