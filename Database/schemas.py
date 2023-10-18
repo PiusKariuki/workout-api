@@ -24,8 +24,8 @@ class MovementRead(MovementCreate):
 
 class MovementWorkoutJoin(SQLModel):
     movement_id: int
-    movement: MovementRead
-    complete: bool
+    movement: MovementRead | None = None
+    complete: bool | None = False
     position: int
     sets: int
     reps: int
