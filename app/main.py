@@ -19,7 +19,8 @@ def start_application() -> FastAPI:
     application.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],  # Replace with your desired origins, or use "*" to allow any origin.
-        allow_methods=["*"],  # Replace with specific HTTP methods, e.g., ["GET", "POST"].
+        allow_credentials=True,
+        allow_methods=["*"],
         allow_headers=["*"],
     )
     create_tables()
