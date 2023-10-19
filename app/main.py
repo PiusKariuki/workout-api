@@ -16,22 +16,16 @@ def create_tables():
 
 def start_application() -> FastAPI:
     application = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],  # Replace with your desired origins, or use "*" to allow any origin.
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     create_tables()
     include_router(application)
     return application
 
 
 app = start_application()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Replace with your desired origins, or use "*" to allow any origin.
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
-@app.get("/")
-def home():
-    return {"message": "success"}
