@@ -16,12 +16,10 @@ def create_tables():
 
 def start_application() -> FastAPI:
     application = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
-    origins = ["http://localhost:5173"]
     application.add_middleware(
         CORSMiddleware,
-        allow_origins=origins,
-        allow_credentials=True,
-        allow_methods=["*"],
+        allow_origins=["*"],  # Replace with your desired origins, or use "*" to allow any origin.
+        allow_methods=["*"],  # Replace with specific HTTP methods, e.g., ["GET", "POST"].
         allow_headers=["*"],
     )
     create_tables()
