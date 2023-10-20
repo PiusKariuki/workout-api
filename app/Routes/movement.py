@@ -3,8 +3,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette import status
 from ..Controllers import create_movement_controller, get_all_movements, get_movement_by_name, \
-    update_movement_in_workout_controller
-from ..Database import get_db, MovementRead, MovementCreate, MovementUpdate, WorkoutRead
+    update_movement_in_workout_controller, delete_split
+from ..Database import get_db, MovementRead, MovementCreate, MovementUpdate
 
 movement_router = APIRouter()
 
@@ -34,5 +34,5 @@ def update_movement_in_workout(workout_id: int, movement_id: int, movement: Move
 
 
 @movement_router.delete("/{workout_id}/{movement_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_movement_in_workout(workout_id: int, movement_id: int):
-    pass
+def delete_movement_in_workout(workout_id: int, movement_id: int, db_session: Session = Depends(get_db)):
+    return delete_split(workout_id=workout_id, movement_id=movement_id, session=db_session)
