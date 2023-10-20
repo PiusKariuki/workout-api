@@ -3,28 +3,39 @@ from typing import List
 from fastapi import APIRouter, Depends
 from sqlmodel import Session
 from starlette import status
-from ..Controllers import create_workout_controller, get_all_workouts, get_todays_workout, get_workout_by_id
-from ..Database import get_db
-from ..Database import WorkoutRead, WorkoutCreate
+from ..Controllers import create_workout_controller, get_all_workouts, get_todays_workout, get_workout_by_id, \
+    update_workout_controller
+from ..Database import WorkoutRead, WorkoutCreate, get_db, WorkoutUpdate
 
 workout_router = APIRouter()
 
 
 @workout_router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_workout(workout: WorkoutCreate, db_session: Session = Depends(get_db)) -> WorkoutRead:
+    """Create a workout """
     return create_workout_controller(workout=workout, session=db_session)
 
 
 @workout_router.get("/", status_code=status.HTTP_200_OK)
 async def all_workouts(limit: int, offset: int, db_session: Session = Depends(get_db)) -> List[WorkoutRead]:
+    """Get all workouts"""
     return get_all_workouts(session=db_session, limit=limit, offset=offset)
 
 
 @workout_router.get("/today", status_code=status.HTTP_200_OK)
 async def today(db_session: Session = Depends(get_db)) -> WorkoutRead:
+    """get today's workout"""
     return get_todays_workout(session=db_session)
 
 
 @workout_router.get("/{workout_id}", status_code=status.HTTP_200_OK)
-async def workout_by_id(workout_id: int, db_session: Session = Depends(get_db)) ->WorkoutRead:
+async def workout_by_id(workout_id: int, db_session: Session = Depends(get_db)) -> WorkoutRead:
+    """Get workout by ID"""
     return get_workout_by_id(workout_id=workout_id, session=db_session)
+
+
+@workout_router.put("/{workout_id}", status_code=status.HTTP_200_OK)
+async def update_workout(workout_id: int, workout_data: WorkoutUpdate,
+                         db_session: Session = Depends(get_db)) -> WorkoutRead:
+    """Update a workout"""
+    return update_workout_controller(workout_id=workout_id, workout_data=workout_data, session=db_session)

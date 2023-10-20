@@ -1,6 +1,6 @@
 from datetime import date, datetime, time
 from fastapi import HTTPException
-from sqlmodel import select
+from sqlmodel import select, Session
 from ..Database import MovementWorkoutJunction
 from ..Database import Workout
 
@@ -40,6 +40,20 @@ def create_workout_controller(workout, session):
             raise HTTPException(status_code=409, detail='Integrity error')
         else:
             raise HTTPException(status_code=422)
+
+
+def update_workout_controller(workout_id, workout_data, session:Session):
+    """updates a workout"""
+    try:
+        workout = session.get(Workout, workout_id)
+        if workout:
+            workout.date = workout_data.date
+            workout.category_id = workout_data.category_id
+            session.add(workout)
+            session.commit()
+        return workout
+    except Exception:
+        raise HTTPException(status_code=422)
 
 
 def get_todays_workout(session):

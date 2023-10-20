@@ -2,8 +2,9 @@ from typing import List
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette import status
-from ..Controllers import create_movement_controller, get_all_movements, get_movement_by_name
-from ..Database import get_db, MovementRead, MovementCreate
+from ..Controllers import create_movement_controller, get_all_movements, get_movement_by_name, \
+    update_movement_in_workout_controller
+from ..Database import get_db, MovementRead, MovementCreate, MovementUpdate, WorkoutRead
 
 movement_router = APIRouter()
 
@@ -22,3 +23,10 @@ async def get_name(name: str, db_session: Session = Depends(get_db)) -> List[Mov
 @movement_router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_movement(movement: MovementCreate, db_session: Session = Depends(get_db)) -> MovementRead:
     return create_movement_controller(movement=movement, session=db_session)
+
+
+@movement_router.put("/", status_code=status.HTTP_200_OK)
+def update_movement_in_workout(workout_id: int, movement_id: int, movement: MovementUpdate,db_session: Session = Depends(get_db)):
+    """Update a movement in a workout"""
+    return update_movement_in_workout_controller(workout_id=workout_id, movement_id=movement_id, movement_data=movement,
+                                                 session=db_session)

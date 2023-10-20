@@ -44,3 +44,17 @@ class WorkoutRead(SQLModel):
     category_id: int | None = None
     category: CategoryRead
     movement_links: List[MovementWorkoutJoin]
+
+
+class WorkoutUpdate(SQLModel):
+    date: datetime | None = None
+    category_id: int | None = None
+
+
+class MovementUpdate(SQLModel):
+    completed: bool | None = None
+    new_workout_id: int | None = None
+    sets: int | None = None
+    reps: int | None = None
+    position: int | None = None
+    rest_in_seconds: int | None = None
