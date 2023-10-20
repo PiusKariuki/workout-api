@@ -46,6 +46,15 @@ def update_movement_in_workout_controller(workout_id: int, movement_id: int, mov
             session.add(movement)
             session.commit()
 
-    except Exception as e:
-        print(f'error ${e}')
+    except Exception:
+        raise HTTPException(status_code=422)
+
+
+def delete_split(workout_id: int, movement_id: int, session: Session):
+    try:
+        split = session.query(MovementWorkoutJunction).filter_by(workout_id=workout_id,
+                                                                 movement_id=movement_id).one()
+        session.delete(split)
+        session.commit()
+    except Exception:
         raise HTTPException(status_code=422)

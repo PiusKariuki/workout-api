@@ -26,7 +26,13 @@ async def create_movement(movement: MovementCreate, db_session: Session = Depend
 
 
 @movement_router.put("/", status_code=status.HTTP_200_OK)
-def update_movement_in_workout(workout_id: int, movement_id: int, movement: MovementUpdate,db_session: Session = Depends(get_db)):
+def update_movement_in_workout(workout_id: int, movement_id: int, movement: MovementUpdate,
+                               db_session: Session = Depends(get_db)):
     """Update a movement in a workout"""
     return update_movement_in_workout_controller(workout_id=workout_id, movement_id=movement_id, movement_data=movement,
                                                  session=db_session)
+
+
+@movement_router.delete("/{workout_id}/{movement_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_movement_in_workout(workout_id: int, movement_id: int):
+    pass
