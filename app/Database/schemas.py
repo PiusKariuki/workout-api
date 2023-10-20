@@ -41,7 +41,7 @@ class WorkoutCreate(SQLModel):
 class WorkoutRead(SQLModel):
     id: int
     date: datetime
-    category_id: int | None = None
+    category_id: int
     category: CategoryRead
     movement_links: List[MovementWorkoutJoin]
 
