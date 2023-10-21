@@ -50,6 +50,27 @@ def update_movement_in_workout_controller(workout_id: int, movement_id: int, mov
         raise HTTPException(status_code=422)
 
 
+def add_movement_to_workout(workout_id: int, movement_data: MovementUpdate, session: Session):
+    try:
+        new_object = MovementWorkoutJunction(
+            position=movement_data.position,
+            workout_id=workout_id,
+            movement_id=movement_data.new_workout_id,
+            sets=movement_data.sets,
+            reps=movement_data.reps,
+            rest_in_seconds=movement_data.rest_in_seconds
+        )
+
+        session.add(new_object)
+        session.commit()
+        return new_object
+    except Exception as e:
+        print(f'\n {e.code}')
+        if e.code == 'gkpj':
+            raise HTTPException(status_code=409, detail='This movement already exists in this workout')
+        raise HTTPException(status_code=422)
+
+
 def delete_split(workout_id: int, movement_id: int, session: Session):
     try:
         split = session.query(MovementWorkoutJunction).filter_by(workout_id=workout_id,

@@ -39,3 +39,6 @@ async def update_workout(workout_id: int, workout_data: WorkoutUpdate,
                          db_session: Session = Depends(get_db)) -> WorkoutRead:
     """Update a workout"""
     return update_workout_controller(workout_id=workout_id, workout_data=workout_data, session=db_session)
+
+
+
