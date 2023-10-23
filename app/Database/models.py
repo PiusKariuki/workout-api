@@ -4,6 +4,11 @@ from sqlalchemy import UniqueConstraint
 from sqlmodel import SQLModel, Field, Relationship
 
 
+class User(SQLModel, table=True):
+    username: str = Field(primary_key=True, default=None)
+    password: str
+
+
 class Category(SQLModel, table=True):
     __table_args__ = (
         UniqueConstraint("title", name="unique_title_constraint"),
@@ -52,4 +57,3 @@ class Workout(SQLModel, table=True):
     # relationship attributes
     category: Category = Relationship(back_populates="workouts")
     movement_links: List["MovementWorkoutJunction"] = Relationship(back_populates="workout")
-

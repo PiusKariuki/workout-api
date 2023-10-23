@@ -58,3 +58,12 @@ class MovementUpdate(SQLModel):
     reps: int | None = None
     position: int | None = None
     rest_in_seconds: int | None = None
+
+
+class UserCreate(SQLModel):
+    username: str
+    password: str
+
+
+class AuthRead(SQLModel):
+    token: str
