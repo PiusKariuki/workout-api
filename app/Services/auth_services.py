@@ -10,7 +10,7 @@ from sqlmodel import Session, select
 from app.Core import settings
 from app.Database import User, get_db
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 def create_access_token(data: dict):

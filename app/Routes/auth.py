@@ -8,7 +8,7 @@ from app.Database import get_db, UserCreate, AuthRead
 auth_router = APIRouter()
 
 
-@auth_router.post("/token")
+@auth_router.post("/login")
 def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
           db_session: Annotated[Session, Depends(get_db)]) -> AuthRead:
     return login_controller(form_data=form_data, session=db_session)

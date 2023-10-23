@@ -7,7 +7,6 @@ from app.Services import verify_password, create_access_token, hash_password
 
 def login_controller(form_data, session: Session):
     try:
-        print("\n hit \n")
         user = session.exec(select(User).where(User.username == form_data.username)).one()
 
         if not user:
@@ -17,7 +16,7 @@ def login_controller(form_data, session: Session):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect password")
 
         token = create_access_token({"sub": user.username})
-        return {"token": token}
+        return {"access_token": token, "token_type": "Bearer"}
     except Exception:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
@@ -30,7 +29,7 @@ def create_user_controller(user: UserCreate, session: Session):
         session.commit()
 
         token = create_access_token({"sub": new_user.username})
-        return {"token": token}
+        return {"access_token": token, "token_type": "Bearer"}
 
     except Exception:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)

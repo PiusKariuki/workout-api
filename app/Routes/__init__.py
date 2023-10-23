@@ -13,4 +13,4 @@ index_router.include_router(category_router, prefix='/category', tags=['category
 
 index_router.include_router(movement_router, prefix='/movement', tags=['movement'])
 
-index_router.include_router(auth_router, tags=['Auth'])
+index_router.include_router(auth_router,prefix='/auth', tags=['Auth'])
