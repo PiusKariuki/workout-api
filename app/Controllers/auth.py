@@ -1,39 +1,25 @@
-from datetime import datetime, timedelta
-from fastapi import HTTPException, Depends
-from jose import JWTError, jwt
-from sqlmodel import Session
-from passlib.context import CryptContext
+from fastapi import HTTPException
+from sqlmodel import Session, select
 from starlette import status
-from app.Core import settings
 from app.Database import UserCreate, User
-
-pwd_context = CryptContext(schemes=['bcrypt'], deprecated="auto")
-
-
-def create_access_token(data:dict):
-    to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(days=30)
-    to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+from app.Services import verify_password, create_access_token, hash_password
 
 
-def decode_token(token: str):
+def login_controller(form_data, session: Session):
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-        return payload
-    except JWTError:
-        raise HTTPException(status_code=401, detail="Could not validate credentials")
+        print("\n hit \n")
+        user = session.exec(select(User).where(User.username == form_data.username)).one()
 
+        if not user:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username")
 
-def get_current_user(token: str = Depends(decode_token)):
-    if token:
-        return token
-    else:
-        raise HTTPException(status_code=401, detail="Not authenticated")
+        if not verify_password(form_data.password, user.password):
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect password")
 
-
-def hash_password(password: str):
-    return pwd_context.hash(password)
+        token = create_access_token({"sub": user.username})
+        return {"token": token}
+    except Exception:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
 
 def create_user_controller(user: UserCreate, session: Session):
@@ -44,8 +30,7 @@ def create_user_controller(user: UserCreate, session: Session):
         session.commit()
 
         token = create_access_token({"sub": new_user.username})
-        return {"id": new_user.id, "token": token}
+        return {"token": token}
 
-    except Exception as e:
-        print(f'\n {e}\n')
+    except Exception:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
