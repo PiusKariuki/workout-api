@@ -2,9 +2,10 @@ from datetime import datetime, timedelta
 from typing import Annotated
 
 from fastapi.security import OAuth2PasswordBearer
+from jose import jwt, JWTError
 from passlib.hash import bcrypt
 from fastapi import HTTPException, Depends
-from jose import jwt, JWTError
+
 from sqlmodel import Session, select
 
 from app.Core import settings
