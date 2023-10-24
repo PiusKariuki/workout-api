@@ -59,6 +59,7 @@ class Workout(SQLModel, table=True):
 
     id: Optional[int] = Field(primary_key=True, default=None)
     category_id: Optional[int] = Field(foreign_key="category.id", default=None)
+    user_id: Optional[int] = Field(foreign_key="user.id", default=None)
     date: datetime = Field(index=True)
     # relationship attributes
     category: Category = Relationship(back_populates="workouts")

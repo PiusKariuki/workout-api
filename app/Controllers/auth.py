@@ -46,8 +46,6 @@ def recover_password_controller(user: UserCreate, session: Session):
         session.add(user_object)
         session.commit()
 
-        print(f'\n user {user.password}\n')
-
         token = create_access_token({"sub": user_object.username})
         return {"access_token": token, "token_type": "Bearer"}
     except Exception:

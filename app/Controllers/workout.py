@@ -73,7 +73,8 @@ def get_all_workouts(session, limit, offset):
         return (session
                 .exec(select(Workout).limit(limit).offset(offset).order_by(Workout.date.desc()))
                 .all())
-    except Exception:
+    except Exception as e:
+        print(f'\n error {e} \n')
         raise HTTPException(status_code=404)
 
 
