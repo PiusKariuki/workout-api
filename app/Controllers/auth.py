@@ -1,4 +1,5 @@
 from fastapi import HTTPException
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 from starlette import status
 from app.Database import UserCreate, User
@@ -31,8 +32,11 @@ def create_user_controller(user: UserCreate, session: Session):
         token = create_access_token({"sub": new_user.username})
         return {"access_token": token, "token_type": "Bearer"}
 
+    except IntegrityError:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Username already exists")
+
     except Exception:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
 def recover_password_controller(user: UserCreate, session: Session):
