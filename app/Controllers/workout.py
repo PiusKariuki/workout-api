@@ -5,13 +5,13 @@ from ..Database import MovementWorkoutJunction
 from ..Database import Workout
 
 
-def create_workout_controller(workout, session):
+def create_workout_controller(workout, session, current_user):
     """Creates a workout with a date and category and includes movements in the junction table"""
     try:
         # set the time to midnight
         new_date = datetime.combine(workout.date, time.min)
 
-        new_workout = Workout(category_id=workout.category_id, date=new_date)
+        new_workout = Workout(category_id=workout.category_id, date=new_date, user_id=current_user.id)
 
         session.add(new_workout)
         session.commit()
@@ -42,7 +42,7 @@ def create_workout_controller(workout, session):
             raise HTTPException(status_code=422)
 
 
-def update_workout_controller(workout_id, workout_data, session:Session):
+def update_workout_controller(workout_id, workout_data, session: Session):
     """updates a workout"""
     try:
         workout = session.get(Workout, workout_id)

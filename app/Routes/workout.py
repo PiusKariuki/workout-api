@@ -6,14 +6,16 @@ from starlette import status
 from ..Controllers import create_workout_controller, get_all_workouts, get_todays_workout, get_workout_by_id, \
     update_workout_controller
 from ..Database import WorkoutRead, WorkoutCreate, get_db, WorkoutUpdate
+from ..Services import get_current_user
 
 workout_router = APIRouter()
 
 
 @workout_router.post("/", status_code=status.HTTP_201_CREATED)
-async def create_workout(workout: WorkoutCreate, db_session: Session = Depends(get_db)) -> WorkoutRead:
+async def create_workout(workout: WorkoutCreate, db_session: Session = Depends(get_db),
+                         current_user: dict = Depends(get_current_user)) -> WorkoutRead:
     """Create a workout """
-    return create_workout_controller(workout=workout, session=db_session)
+    return create_workout_controller(workout=workout, session=db_session, current_user=current_user)
 
 
 @workout_router.get("/", status_code=status.HTTP_200_OK)

@@ -11,8 +11,7 @@ category_router = APIRouter()
 
 
 @category_router.get("/", status_code=status.HTTP_200_OK)
-async def all_categories(db_session: session = Depends(get_db),
-                         current_user: dict = Depends(get_current_user)) -> List[CategoryRead]:
+async def all_categories(db_session: session = Depends(get_db)) -> List[CategoryRead]:
     return get_all_categories(session=db_session)
 
 
