@@ -28,7 +28,6 @@ def create_user_controller(user: UserCreate, session: Session):
         new_user = User(username=user.username, password=hash_password(user.password))
         session.add(new_user)
         session.commit()
-
         token = create_access_token({"sub": new_user.username})
         return {"access_token": token, "token_type": "Bearer"}
 
@@ -38,11 +37,18 @@ def create_user_controller(user: UserCreate, session: Session):
 
 def recover_password_controller(user: UserCreate, session: Session):
     try:
-        user = session.get(User, user.username)
-        user.password = hash_password(user.password)
-        session.add(user)
+        user_object = session.exec(select(User).where(User.username == user.username)).one()
+        if not user_object:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Incorrect username")
+
+        user_object.password = hash_password(user.password)
+
+        session.add(user_object)
         session.commit()
-        token = create_access_token({"sub": user.username})
+
+        print(f'\n user {user.password}\n')
+
+        token = create_access_token({"sub": user_object.username})
         return {"access_token": token, "token_type": "Bearer"}
     except Exception:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
