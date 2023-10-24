@@ -68,3 +68,4 @@ class UserCreate(SQLModel):
 class AuthRead(SQLModel):
     access_token: str
     token_type: str
+

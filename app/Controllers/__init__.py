@@ -4,4 +4,4 @@ from .category import create_category_controller, get_all_categories
 from .workout import create_workout_controller, get_todays_workout, get_all_workouts, get_workout_by_id, \
     update_workout_controller
 
-from .auth import create_user_controller,login_controller
+from .auth import create_user_controller,login_controller, recover_password_controller

@@ -6,6 +6,7 @@ from app.Services import verify_password, create_access_token, hash_password
 
 
 def login_controller(form_data, session: Session):
+    """login controller"""
     try:
         user = session.exec(select(User).where(User.username == form_data.username)).one()
 
@@ -33,3 +34,15 @@ def create_user_controller(user: UserCreate, session: Session):
 
     except Exception:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+
+
+def recover_password_controller(user: UserCreate, session: Session):
+    try:
+        user = session.get(User, user.username)
+        user.password = hash_password(user.password)
+        session.add(user)
+        session.commit()
+        token = create_access_token({"sub": user.username})
+        return {"access_token": token, "token_type": "Bearer"}
+    except Exception:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
