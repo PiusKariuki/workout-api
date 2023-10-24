@@ -5,8 +5,14 @@ from sqlmodel import SQLModel, Field, Relationship
 
 
 class User(SQLModel, table=True):
-    username: str = Field(primary_key=True, default=None)
+    __table_args__ = (
+        UniqueConstraint("username", name="unique_username_constraint"),
+    )
+
+    id: Optional[int] = Field(primary_key=True, default=None)
+    username: str
     password: str
+    workouts: List["Workout"] = Relationship(back_populates="user")
 
 
 class Category(SQLModel, table=True):
@@ -57,3 +63,4 @@ class Workout(SQLModel, table=True):
     # relationship attributes
     category: Category = Relationship(back_populates="workouts")
     movement_links: List["MovementWorkoutJunction"] = Relationship(back_populates="workout")
+    user: "User" = Relationship(back_populates="workouts")
