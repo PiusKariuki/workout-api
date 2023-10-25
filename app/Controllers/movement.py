@@ -10,7 +10,8 @@ def create_movement_controller(movement, session):
         session.commit()
         session.refresh(new_movement)
         return new_movement
-    except Exception:
+    except Exception as e:
+        print(f'\n error {e} \n')
         raise HTTPException(status_code=422)
 
 
