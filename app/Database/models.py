@@ -13,6 +13,21 @@ class User(SQLModel, table=True):
     username: str
     password: str
     workouts: List["Workout"] = Relationship(back_populates="user")
+    role_links: List["Roles"] = Relationship(back_populates="users")
+
+
+class Roles(SQLModel, table=True):
+    id: Optional[int] = Field(primary_key=True, default=None)
+    name: str
+    description: str | None = None
+    user_links: List["User"] = Relationship(back_populates="roles")
+
+
+class UserRoles(SQLModel, table=True):
+    user_id: Optional[int] = Field(foreign_key="user.id", default=None, index=True, primary_key=True)
+    role_id: Optional[int] = Field(foreign_key="roles.id", default=None, index=True, primary_key=True)
+    user_links: "User" = Relationship(back_populates="roles")
+    role_links: "Roles" = Relationship(back_populates="users")
 
 
 class Category(SQLModel, table=True):

@@ -4,6 +4,8 @@ from sqlalchemy import pool
 from alembic import context
 from app.Core import settings
 from sqlmodel import SQLModel
+from app.Database import *
+
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
