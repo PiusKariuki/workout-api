@@ -13,7 +13,7 @@ class User(SQLModel, table=True):
     username: str
     password: str
     workouts: List["Workout"] = Relationship(back_populates="user")
-    role_links: List["Roles"] = Relationship(back_populates="user")
+    role_links: List["UserRoles"] = Relationship(back_populates="user")
 
 
 class Roles(SQLModel, table=True):
