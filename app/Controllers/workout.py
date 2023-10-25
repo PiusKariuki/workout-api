@@ -1,5 +1,6 @@
 from datetime import date, datetime, time
 from fastapi import HTTPException
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import select, Session
 from ..Database import MovementWorkoutJunction
 from ..Database import Workout
@@ -34,12 +35,11 @@ def create_workout_controller(workout, session, current_user):
 
         return new_workout
 
-    except Exception as e:
-        # for conflict cases where a workout already exists
-        if e.code == 'gkpj':
-            raise HTTPException(status_code=409, detail='Integrity error')
-        else:
-            raise HTTPException(status_code=422)
+    except IntegrityError:
+        raise HTTPException(status_code=409, detail='A workout for this date already exists')
+
+    except Exception:
+        raise HTTPException(status_code=422)
 
 
 def update_workout_controller(workout_id, workout_data, session: Session):
