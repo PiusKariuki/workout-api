@@ -26,9 +26,9 @@ async def all_my_workouts(limit: int, offset: int, db_session: Session = Depends
 
 
 @workout_router.get("/today", status_code=status.HTTP_200_OK)
-async def today(db_session: Session = Depends(get_db)) -> WorkoutRead:
+async def today(db_session: Session = Depends(get_db), current_user: dict =Depends(get_current_user)) -> WorkoutRead:
     """get today's workout"""
-    return get_todays_workout(session=db_session)
+    return get_todays_workout(session=db_session, current_user=current_user)
 
 
 @workout_router.get("/{workout_id}", status_code=status.HTTP_200_OK)

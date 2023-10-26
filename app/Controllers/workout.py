@@ -56,13 +56,16 @@ def update_workout_controller(workout_id, workout_data, session: Session):
         raise HTTPException(status_code=422)
 
 
-def get_todays_workout(session):
+def get_todays_workout(session, current_user):
     """Get the workout of the day """
     try:
         # get the year month and date in string format
         date_today = date.today().strftime('%Y-%m-%d')
         # get the one record with that date
-        todays_workout = session.exec(select(Workout).where(Workout.date == date_today)).one()
+        todays_workout = (session
+                          .exec(select(Workout)
+                                .where(Workout.date == date_today, Workout.user_id == current_user.id))
+                          .one())
         return todays_workout
     except Exception:
         raise HTTPException(status_code=404)
