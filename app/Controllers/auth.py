@@ -2,6 +2,8 @@ from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 from starlette import status
+
+from app.Core import settings
 from app.Database import UserCreate, User
 from app.Services import verify_password, create_access_token, hash_password
 
@@ -54,3 +56,17 @@ def recover_password_controller(user: UserCreate, session: Session):
         return {"access_token": token, "token_type": "Bearer"}
     except Exception:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+
+def demo_login_controller(session: Session):
+    try:
+        user = session.exec(select(User).where(User.username == settings.DEMO_EMAIL)).one()
+
+        if not user:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username")
+
+        token = create_access_token({"sub": user.username})
+        return {"access_token": token, "token_type": "Bearer"}
+
+    except Exception:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)

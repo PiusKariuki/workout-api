@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlmodel import Session
-from app.Controllers import create_user_controller, login_controller, recover_password_controller
+from app.Controllers import create_user_controller, login_controller, recover_password_controller, demo_login_controller
 from app.Database import get_db, UserCreate, AuthRead
 
 auth_router = APIRouter()
@@ -22,3 +22,8 @@ def register(user: UserCreate, db_session: Annotated[Session, Depends(get_db)]) 
 @auth_router.post("/recover")
 def recover(user: UserCreate, db_session: Annotated[Session, Depends(get_db)]) -> AuthRead:
     return recover_password_controller(user=user, session=db_session)
+
+
+@auth_router.get("/demo")
+def demo_account_login(db_session: Session = Depends(get_db)) -> AuthRead:
+    return demo_login_controller(session=db_session)

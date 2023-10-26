@@ -21,5 +21,7 @@ class Settings:
     ALGORITHM: str = os.getenv("ALGORITHM")
     SALT: str = os.getenv("SALT")
 
+    DEMO_EMAIL:str = os.getenv("DEMO_EMAIL")
+
 
 settings = Settings
