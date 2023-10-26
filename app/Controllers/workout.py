@@ -68,13 +68,16 @@ def get_todays_workout(session):
         raise HTTPException(status_code=404)
 
 
-def get_all_workouts(session, limit, offset):
+def get_all_my_workouts_controller(session, limit, offset, current_user):
     try:
         return (session
-                .exec(select(Workout).limit(limit).offset(offset).order_by(Workout.date.desc()))
+                .exec(select(Workout)
+                      .where(Workout.user_id == current_user.id)
+                      .limit(limit)
+                      .offset(offset)
+                      .order_by(Workout.date.desc()))
                 .all())
-    except Exception as e:
-        print(f'\n error {e} \n')
+    except Exception:
         raise HTTPException(status_code=404)
 
 

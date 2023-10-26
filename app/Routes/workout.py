@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends
 from sqlmodel import Session
 from starlette import status
-from ..Controllers import create_workout_controller, get_all_workouts, get_todays_workout, get_workout_by_id, \
+from ..Controllers import create_workout_controller, get_all_my_workouts_controller, get_todays_workout, get_workout_by_id, \
     update_workout_controller
 from ..Database import WorkoutRead, WorkoutCreate, get_db, WorkoutUpdate
 from ..Services import get_current_user
@@ -19,9 +19,10 @@ async def create_workout(workout: WorkoutCreate, db_session: Session = Depends(g
 
 
 @workout_router.get("/", status_code=status.HTTP_200_OK)
-async def all_workouts(limit: int, offset: int, db_session: Session = Depends(get_db)) -> List[WorkoutRead]:
+async def all_my_workouts(limit: int, offset: int, db_session: Session = Depends(get_db),
+                       current_user: dict = Depends(get_current_user)) -> List[WorkoutRead]:
     """Get all workouts"""
-    return get_all_workouts(session=db_session, limit=limit, offset=offset)
+    return get_all_my_workouts_controller(session=db_session, limit=limit, offset=offset, current_user=current_user)
 
 
 @workout_router.get("/today", status_code=status.HTTP_200_OK)
