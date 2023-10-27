@@ -23,5 +23,7 @@ class Settings:
 
     DEMO_EMAIL:str = os.getenv("DEMO_EMAIL")
 
+    API_NINJAS_KEY: str = os.getenv("API_NINJAS_KEY")
+
 
 settings = Settings

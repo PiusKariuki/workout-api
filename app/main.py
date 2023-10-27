@@ -6,6 +6,7 @@ from .Database import engine
 from fastapi.middleware.cors import CORSMiddleware
 
 
+
 def include_router(application: FastAPI):
     application.include_router(index_router)
 

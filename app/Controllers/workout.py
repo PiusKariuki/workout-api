@@ -2,7 +2,7 @@ from datetime import date, datetime, time
 from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select, Session
-from ..Database import MovementWorkoutJunction
+from ..Database import MovementWorkoutJunction, Movement
 from ..Database import Workout
 
 
@@ -59,6 +59,9 @@ def update_workout_controller(workout_id, workout_data, session: Session):
 def get_todays_workout(session, current_user):
     """Get the workout of the day """
     try:
+        deadlift = session.exec(select(Movement).where(Movement.name == 'Deadlift squat')).one()
+        session.delete(deadlift)
+        session.commit()
         # get the year month and date in string format
         date_today = date.today().strftime('%Y-%m-%d')
         # get the one record with that date

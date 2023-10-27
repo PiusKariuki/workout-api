@@ -10,3 +10,5 @@ sqlmodel~=0.0.8
 passlib~=1.7.4
 python-jose~=3.3.0
 python-multipart
+
+requests~=2.31.0
