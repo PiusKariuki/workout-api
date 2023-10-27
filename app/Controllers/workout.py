@@ -2,7 +2,7 @@ from datetime import date, datetime, time
 from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select, Session
-from ..Database import MovementWorkoutJunction
+from ..Database import MovementWorkoutJunction, TemplateWorkout
 from ..Database import Workout
 
 
@@ -89,3 +89,21 @@ def get_workout_by_id(session, workout_id):
         return session.get(Workout, workout_id)
     except Exception:
         raise HTTPException(status_code=404)
+
+
+def use_workout_as_template_controller(template_workout: TemplateWorkout, session, current_user):
+    try:
+        original_workout = session.get(Workout, template_workout.id)
+
+        new_date = datetime.combine(template_workout.date, time.min)
+
+        new_workout = Workout(category_id=original_workout.category_id, date=new_date, user_id=current_user.id,
+                              movement_links=original_workout.movement_links)
+
+        session.add(new_workout)
+        session.commit()
+
+        return new_workout
+
+    except Exception:
+        raise HTTPException(status_code=422)

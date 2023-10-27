@@ -69,3 +69,9 @@ class AuthRead(SQLModel):
     access_token: str
     token_type: str
 
+
+class TemplateWorkout(SQLModel):
+    id: int
+    date: datetime
+
+
