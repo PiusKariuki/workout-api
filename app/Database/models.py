@@ -68,6 +68,10 @@ class Movement(SQLModel, table=True):
 
 
 class Workout(SQLModel, table=True):
+    __table_args__ = (
+        UniqueConstraint("user_id", "date", name="unique_dates_per_user"),
+    )
+
     id: Optional[int] = Field(primary_key=True, default=None)
     category_id: Optional[int] = Field(foreign_key="category.id", default=None)
     user_id: Optional[int] = Field(foreign_key="user.id", default=None)
