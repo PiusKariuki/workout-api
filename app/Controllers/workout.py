@@ -71,17 +71,35 @@ def get_todays_workout(session, current_user):
         raise HTTPException(status_code=404)
 
 
-def get_all_my_workouts_controller(session, limit, offset, current_user):
+def get_all_my_workouts_controller(
+        session,
+        limit,
+        category_id: int | None,
+        min_date: str | None,
+        max_date: str | None,
+        current_user):
     try:
-        return (session
-                .exec(select(Workout)
-                      .where(Workout.user_id == current_user.id)
-                      .offset(offset)
-                      .limit(limit)
-                      .order_by(Workout.date.desc()))
-                .all())
-    except Exception:
-        raise HTTPException(status_code=404)
+        query = select(Workout).where(Workout.user_id == current_user.id)
+
+        if category_id:
+            query = query.where(Workout.category_id == category_id)
+
+        if min_date:
+            minimum_date = datetime.strptime(min_date, "%Y-%m-%d")
+            query = query.where(Workout.date >= minimum_date)
+
+        if max_date:
+            maximum_date = datetime.strptime(max_date, "%Y-%m-%d")
+            query = query.where(Workout.date <= maximum_date)
+
+        query = query.limit(limit)
+
+        results = session.exec(query).all()
+        return results
+
+    except Exception as e:
+        print(f'\n error {e} \n')
+        raise HTTPException(status_code=422, detail=e)
 
 
 def get_workout_by_id(session, workout_id):

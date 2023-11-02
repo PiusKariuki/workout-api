@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List
 
 from fastapi import APIRouter, Depends
@@ -20,10 +21,21 @@ async def create_workout(workout: WorkoutCreate, db_session: Session = Depends(g
 
 
 @workout_router.get("/", status_code=status.HTTP_200_OK)
-async def all_my_workouts(limit: int, offset: int, db_session: Session = Depends(get_db),
-                          current_user: dict = Depends(get_current_user)) -> List[WorkoutRead]:
+async def all_my_workouts(
+        limit: int,
+        category_id: int | None = None,
+        min_date: str | None = None,
+        max_date: str | None = None,
+        db_session: Session = Depends(get_db),
+        current_user: dict = Depends(get_current_user)) -> List[WorkoutRead]:
     """Get all workouts"""
-    return get_all_my_workouts_controller(session=db_session, limit=limit, offset=offset, current_user=current_user)
+    return get_all_my_workouts_controller(
+        session=db_session,
+        limit=limit,
+        category_id=category_id,
+        min_date=min_date,
+        max_date=max_date,
+        current_user=current_user)
 
 
 @workout_router.get("/today", status_code=status.HTTP_200_OK)
