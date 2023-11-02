@@ -4,8 +4,7 @@ from sqlmodel import create_engine, Session
 
 from ..Core.config import settings
 
-
-engine = create_engine(settings.DATABASE_URI, echo=True)
+engine = create_engine(settings.DATABASE_URI, echo=False)
 
 
 def get_db() -> Generator:
