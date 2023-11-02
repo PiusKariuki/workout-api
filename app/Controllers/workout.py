@@ -76,8 +76,8 @@ def get_all_my_workouts_controller(session, limit, offset, current_user):
         return (session
                 .exec(select(Workout)
                       .where(Workout.user_id == current_user.id)
-                      .limit(limit)
                       .offset(offset)
+                      .limit(limit)
                       .order_by(Workout.date.desc()))
                 .all())
     except Exception:
