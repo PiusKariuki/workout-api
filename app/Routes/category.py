@@ -1,11 +1,12 @@
 from typing import List
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import session
 from starlette import status
+
 from ..Controllers import create_category_controller, get_all_categories
-from ..Database import get_db
 from ..Database import CategoryRead, CategoryCreate
-from ..Services import get_current_user
+from ..Database import get_db
 
 category_router = APIRouter()
 

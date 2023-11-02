@@ -1,9 +1,9 @@
-from datetime import datetime
 from typing import List
 
 from fastapi import APIRouter, Depends
 from sqlmodel import Session
 from starlette import status
+
 from ..Controllers import create_workout_controller, get_all_my_workouts_controller, get_todays_workout, \
     get_workout_by_id, \
     update_workout_controller, use_workout_as_template_controller

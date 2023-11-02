@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from .auth import auth_router
 from ..Routes.category import category_router
 from ..Routes.movement import movement_router

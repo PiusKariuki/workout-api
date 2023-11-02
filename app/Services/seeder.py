@@ -1,8 +1,9 @@
+import json
+
+import requests
 from sqlmodel import Session
 
 from app.Database import Movement, engine
-import requests
-import json
 
 
 def seed_movements():

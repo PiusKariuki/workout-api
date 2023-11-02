@@ -1,7 +1,9 @@
 from datetime import date, datetime, time
+
 from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select, Session
+
 from ..Database import MovementWorkoutJunction, TemplateWorkout
 from ..Database import Workout
 

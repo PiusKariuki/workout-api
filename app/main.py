@@ -1,10 +1,10 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import SQLModel
-from .Routes import index_router
+
 from .Core.config import settings
 from .Database import engine
-from fastapi.middleware.cors import CORSMiddleware
-
+from .Routes import index_router
 
 
 def include_router(application: FastAPI):
