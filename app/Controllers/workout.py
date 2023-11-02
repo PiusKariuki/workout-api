@@ -104,6 +104,8 @@ def use_workout_as_template_controller(template_workout: TemplateWorkout, sessio
         session.commit()
 
         return new_workout
+    except IntegrityError as e:
+        raise HTTPException(status_code=409, detail='A workout already exists for this date')
 
     except Exception:
         raise HTTPException(status_code=422)
